@@ -11,10 +11,37 @@ function App() {
         <div className="App">
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Main />}></Route>
-                    <Route path="/signin" element={<Signin />}></Route>
-                    <Route path="/signup" element={<Signup />}></Route>
-                    <Route path="/todo" element={<Todo />}></Route>
+                    <Route path="/" element={<Main />} />
+                    <Route
+                        path="/signin"
+                        element={
+                            localStorage.getItem("access_token") ? (
+                                <Navigate replace to="/todo" />
+                            ) : (
+                                <Signin />
+                            )
+                        }
+                    />
+                    <Route
+                        path="/signup"
+                        element={
+                            localStorage.getItem("access_token") ? (
+                                <Navigate replace to="/todo" />
+                            ) : (
+                                <Signup />
+                            )
+                        }
+                    />
+                    <Route
+                        path="/todo"
+                        element={
+                            !localStorage.getItem("access_token") ? (
+                                <Navigate replace to="/signin" />
+                            ) : (
+                                <Todo />
+                            )
+                        }
+                    />
                 </Routes>
             </BrowserRouter>
         </div>
