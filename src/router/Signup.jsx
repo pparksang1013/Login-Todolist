@@ -6,9 +6,12 @@ import SignInputComp from "../components/SignInputComp";
 
 // API
 import { signupAPI } from "../api/postAxios";
-import { newAxios } from "../api/createAxios";
+
+// HOOKS
+import useRedirect from "../hooks/useRedirect";
 
 function Signup() {
+    useRedirect("/signup");
     const [inputValue, setInputValue] = useState({
         email: "",
         password: "",
@@ -19,8 +22,8 @@ function Signup() {
     const signUpSubmit = (e) => {
         e.preventDeufault();
 
-        // signupAPI(inputValue.email, inputValue. password);
-        // navigate("/signin");
+        signupAPI(inputValue.email, inputValue.password);
+        navigate("/signin");
         return;
     };
 

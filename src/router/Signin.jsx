@@ -7,11 +7,16 @@ import SignInputComp from "../components/SignInputComp";
 // API
 import { signinAPI } from "../api/postAxios";
 
+// HOOKS
+import useRedirect from "../hooks/useRedirect";
+
 function Signin() {
+    useRedirect("/signin");
     const [inputValue, setInputValue] = useState({
         email: "",
         password: "",
     });
+
     const [onoff, setOnoff] = useState(true);
     const navigate = useNavigate();
 
@@ -21,10 +26,9 @@ function Signin() {
             .then((res) => {
                 localStorage.setItem("access_token", res.data.access_token);
                 navigate("/todo");
-                return;
             })
             .catch((err) => {
-                console.log(err);
+                alert(err);
             });
     };
 
