@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { createContext } from "react";
+import { Routes, Route } from "react-router-dom";
 
 // ROUTE
 import Main from "./router/Main";
@@ -9,49 +10,15 @@ import Todo from "./router/Todo";
 function App() {
     return (
         <div className="App">
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<Main />} />
-                    <Route
-                        path="/signin"
-                        element={
-                            localStorage.getItem("access_token") ? (
-                                <Navigate replace to="/todo" />
-                            ) : (
-                                <Signin />
-                            )
-                        }
-                    />
-                    <Route
-                        path="/signup"
-                        element={
-                            localStorage.getItem("access_token") ? (
-                                <Navigate replace to="/todo" />
-                            ) : (
-                                <Signup />
-                            )
-                        }
-                    />
-                    <Route
-                        path="/todo"
-                        element={
-                            !localStorage.getItem("access_token") ? (
-                                <Navigate replace to="/signin" />
-                            ) : (
-                                <Todo />
-                            )
-                        }
-                    />
-                </Routes>
-            </BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Main />} />
+                <Route path="/signin" element={<Signin />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/todo" element={<Todo />} />
+                <Route path="/*" element={<Todo />} />
+            </Routes>
         </div>
     );
 }
 
 export default App;
-
-// localStorage.getItem("access_token") ? (
-//     <Navigate replace to="/todo" />
-// ) : (
-//     <SignIn />
-// )
