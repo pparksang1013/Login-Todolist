@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import styled from "styled-components";
 
 // API
 import { TODO_DELETE_API } from "../../api/deleteAxios";
@@ -6,8 +7,15 @@ import { TODO_PUT_API } from "../../api/putAxios";
 
 function TodoList({ id, todo, isCompleted, todos, setTodos }) {
     const [edit, setEdit] = useState(false);
-    const [complete, setComplete] = useState(isCompleted);
+    const [complete, setComplete] = useState(false);
     const [inputValue, setInputValue] = useState("");
+    const EDIT_REF = useRef();
+
+    useEffect(() => {
+        if (edit) {
+            setInputValue(EDIT_REF.current.value);
+        }
+    }, [edit]);
 
     const deleteItem = () => {
         setTodos(todos.filter((item) => item.id !== id));
@@ -15,6 +23,8 @@ function TodoList({ id, todo, isCompleted, todos, setTodos }) {
     };
 
     const handleEdit = () => {
+        console.log(EDIT_REF.current);
+        setInputValue();
         setEdit(true);
     };
 
@@ -24,7 +34,10 @@ function TodoList({ id, todo, isCompleted, todos, setTodos }) {
 
     const handelComplete = () => {
         setComplete((prev) => !prev);
-        console.log(complete);
+    };
+
+    const handelCancle = () => {
+        setEdit(false);
     };
 
     const editItem = (e) => {
@@ -40,56 +53,121 @@ function TodoList({ id, todo, isCompleted, todos, setTodos }) {
     };
 
     return (
-        <div>
+        <ListWrapper complete={complete}>
             {edit ? (
                 <>
-                    <li key={id}>
+                    <li>
                         <label>
                             <input
                                 type="checkbox"
-                                complete
+                                complete={complete}
                                 onClick={handelComplete}
                             />
                             <input
                                 data-testid="modify-input"
                                 onChange={handleChange}
+                                defaultValue={todo}
+                                ref={EDIT_REF}
+                                type="text"
                             />
                         </label>
-                        <button data-testid="submit-button" onClick={editItem}>
+                        <Button
+                            data-testid="submit-button"
+                            onClick={editItem}
+                            fontChange={edit}
+                        >
                             제출
-                        </button>
+                        </Button>
 
-                        <button data-testid="cancel-button">취소</button>
+                        <Button
+                            data-testid="cancel-button"
+                            onClick={handelCancle}
+                        >
+                            취소
+                        </Button>
                     </li>
                 </>
             ) : (
                 <>
-                    <li key={id}>
+                    <li>
                         <label>
                             <input
                                 type="checkbox"
-                                complete
+                                complete={complete}
                                 onClick={handelComplete}
                             />
                             <span>{todo}</span>
                         </label>
-                        <button
+                        <Button
                             data-testid="modify-button"
                             onClick={handleEdit}
                         >
                             수정
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                             data-testid="delete-button"
                             onClick={deleteItem}
                         >
                             삭제
-                        </button>
+                        </Button>
                     </li>
                 </>
             )}
-        </div>
+        </ListWrapper>
     );
 }
 
 export default TodoList;
+
+const Button = styled.button`
+    font-size: 0.82em;
+    border: 1px solid #f2a649;
+    border-radius: 20px;
+    padding: 0.3em 1em;
+    margin-left: 6px;
+    vertical-align: middle;
+    background-color: ${(props) => (props.fontChange ? "#f2a649" : "#fff")};
+    color: ${(props) => (props.fontChange ? "#fff" : "#000")};
+
+    &:disabled:hover {
+        border: 1px solid rgba(16, 16, 16, 0.3);
+        background-color: transparent;
+        color: rgba(16, 16, 16, 0.3);
+    }
+
+    &:hover {
+        border: 1px solid #f2a649;
+        background-color: #f2a649;
+        color: #fff;
+    }
+`;
+
+const ListWrapper = styled.ul`
+    li {
+        height: 50px;
+    }
+
+    span {
+        display: inline-block;
+        margin-left: 8px;
+        width: 320px;
+        font-size: 18.9px;
+        font-weight: 500;
+        vertical-align: middle;
+        text-decoration: ${(props) =>
+            props.complete ? "line-through 2px #f2a649" : null};
+    }
+
+    input[type="checkbox"] {
+        vertical-align: middle;
+    }
+
+    input[type="text"] {
+        width: 320px;
+        display: inline-block;
+        font-size: 18.9px;
+        font-weight: 500;
+        margin-left: 8px;
+        vertical-align: middle;
+    }
+`;

@@ -1,5 +1,5 @@
 // COMPONENT
-import SignComponent from "../components/SignComponent";
+import SignComponent from "../components/sign/SignComponent";
 
 // HOOKS
 import useRedirect from "../hooks/useRedirect";

@@ -1,15 +1,16 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-// HOOKS
+// API
 import { SIGN_UP_POST_API, SIGN_IN_POST_API } from "../api/postAxios";
 
-function useSign(e) {
+function useSign() {
     const [signInfo, setSignInfo] = useState({
         email: "",
         password: "",
     });
     const [bool, setBool] = useState(true);
+
     const navigate = useNavigate();
 
     const SIGN_EMAIL = useRef();
@@ -33,7 +34,7 @@ function useSign(e) {
         }
     };
 
-    const sign_change_event = (e) => {
+    const sign_change_event = () => {
         setSignInfo({
             email: SIGN_EMAIL.current.value,
             password: SIGN_PASSWORD.current.value,

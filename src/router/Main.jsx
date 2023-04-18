@@ -45,7 +45,7 @@ const TodoTxt = styled.h1`
     word-spacing: 0.4em;
     font-weight: 900;
     text-align: center;
-    margin-top: 220px;
+    margin: 220px 0 40px;
     color: #2b2b2b;
     margin-right: 12px;
 `;

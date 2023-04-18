@@ -1,5 +1,3 @@
-import { useNavigate } from "react-router-dom";
-
 import newAxios from "./createAxios";
 
 export const SIGN_UP_POST_API = async (email, password) => {

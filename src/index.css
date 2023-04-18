@@ -1,4 +1,4 @@
-body {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -21,4 +21,9 @@ input {
 ::selection {
     background-color: transparent;
     color: #f2a649;
+}
+
+ul,
+li {
+    list-style: none;
 }
