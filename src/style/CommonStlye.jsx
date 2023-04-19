@@ -12,7 +12,7 @@ export const SignInput = styled.input`
     border-radius: 6px;
 
     &::placeholder {
-        color: rgba(16, 16, 16, 0.3);
+        color: #f96f3e;
         font-size: 15px;
     }
 
