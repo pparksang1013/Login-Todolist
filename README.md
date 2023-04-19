@@ -139,5 +139,6 @@ Assignment 10
 
 ![투두리스트](https://user-images.githubusercontent.com/125449198/233083535-a1822a9b-7fb0-45c9-840e-fcc938e4753f.gif)
 
-**리다이렉트**
+> **리다이렉트**
+
 ![리다이렉트](https://user-images.githubusercontent.com/125449198/233083680-7f89f9e5-f003-4e13-98f7-b8051e9b4453.gif)
