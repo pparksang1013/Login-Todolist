@@ -3,10 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 function useRedirect(path) {
     const navigate = useNavigate();
-    const TOKEN = localStorage.getItem("access_token") ? true : false;
 
     useEffect(() => {
-        if (TOKEN) {
+        if (localStorage.getItem("access_token")) {
             navigate("/todo");
         } else {
             navigate(path);

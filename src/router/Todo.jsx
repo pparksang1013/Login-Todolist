@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 // API
-import { TODO_GET_API } from "../api/getAxios";
+import { TODO_GET_API } from "../api/todoAxios";
 
 // HOOKS
 import useRedirect from "../hooks/useRedirect";
@@ -19,9 +19,11 @@ function Todo() {
 
     useEffect(() => {
         if (localStorage.getItem("access_token")) {
-            TODO_GET_API("/todos").then((res) => {
-                setTodos(res.data);
-            });
+            TODO_GET_API("/todos")
+                .then((res) => {
+                    setTodos(res.data);
+                })
+                .catch((err) => alert(err));
         }
     }, []);
 
@@ -31,7 +33,7 @@ function Todo() {
 
     return (
         <TodoWrapper>
-            <h1>투두투두</h1>
+            <h1>투두투두 🎾</h1>
             <TodoForm todos={todos} setTodos={setTodos} />
             {todos.map((ele) => {
                 return (

@@ -2,8 +2,7 @@ import { useRef } from "react";
 import styled from "styled-components";
 
 // API
-
-import { TODO_POST_API } from "../../api/postAxios";
+import { TODO_POST_API } from "../../api/todoAxios";
 
 function TodoForm({ todos, setTodos }) {
     const TODO_INPUT_REF = useRef();
@@ -14,10 +13,12 @@ function TodoForm({ todos, setTodos }) {
             return;
         }
 
-        TODO_POST_API({ todo: TODO_INPUT_REF.current.value }).then((res) => {
-            setTodos([...todos, res.data]);
-            TODO_INPUT_REF.current.value = "";
-        });
+        TODO_POST_API({ todo: TODO_INPUT_REF.current.value })
+            .then((res) => {
+                setTodos([...todos, res.data]);
+                TODO_INPUT_REF.current.value = "";
+            })
+            .catch((err) => alert(err));
     };
 
     return (

@@ -2,14 +2,14 @@ import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 // API
-import { SIGN_UP_POST_API, SIGN_IN_POST_API } from "../api/postAxios";
+import { SIGN_UP_POST_API, SIGN_IN_POST_API } from "../api/signAxios";
 
 function useSign() {
     const [signInfo, setSignInfo] = useState({
         email: "",
         password: "",
     });
-    const [bool, setBool] = useState(true);
+    const [bool, setBool] = useState(false);
 
     const navigate = useNavigate();
 
@@ -18,8 +18,13 @@ function useSign() {
 
     const sign_click_event = (e, testid) => {
         if (testid === "signup-button") {
-            SIGN_UP_POST_API(signInfo.email, signInfo.password);
-            navigate("/signin");
+            SIGN_UP_POST_API(signInfo.email, signInfo.password)
+                .then(() => {
+                    navigate("/signin");
+                })
+                .catch((err) => {
+                    alert(err);
+                });
         }
 
         if (testid === "signin-button") {

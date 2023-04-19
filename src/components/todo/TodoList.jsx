@@ -2,12 +2,11 @@ import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 
 // API
-import { TODO_DELETE_API } from "../../api/deleteAxios";
-import { TODO_PUT_API } from "../../api/putAxios";
+import { TODO_PUT_API, TODO_DELETE_API } from "../../api/todoAxios";
 
 function TodoList({ id, todo, isCompleted, todos, setTodos }) {
     const [edit, setEdit] = useState(false);
-    const [complete, setComplete] = useState(false);
+    const [complete, setComplete] = useState(isCompleted);
     const [inputValue, setInputValue] = useState("");
     const EDIT_REF = useRef();
 
@@ -19,11 +18,10 @@ function TodoList({ id, todo, isCompleted, todos, setTodos }) {
 
     const deleteItem = () => {
         setTodos(todos.filter((item) => item.id !== id));
-        TODO_DELETE_API(`/todos/${id}`);
+        TODO_DELETE_API(`/todos/${id}`).catch((err) => alert(err));
     };
 
     const handleEdit = () => {
-        console.log(EDIT_REF.current);
         setInputValue();
         setEdit(true);
     };
@@ -44,12 +42,16 @@ function TodoList({ id, todo, isCompleted, todos, setTodos }) {
         TODO_PUT_API(`/todos/${id}`, {
             todo: inputValue,
             isCompleted: complete,
-        }).then((res) => {
-            const index = todos.findIndex((todo) => todo.id === res.data.id);
-            todos.splice(index, 1, res.data);
-            setTodos([...todos]);
-            setEdit(false);
-        });
+        })
+            .then((res) => {
+                const index = todos.findIndex(
+                    (todo) => todo.id === res.data.id
+                );
+                todos.splice(index, 1, res.data);
+                setTodos([...todos]);
+                setEdit(false);
+            })
+            .catch((err) => alert(err));
     };
 
     return (
